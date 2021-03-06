@@ -1,0 +1,103 @@
+public class Candle {
+	protected String color;
+	protected int Altura;
+	protected double precio;
+	
+	protected Candle(){
+		
+	}
+	public Candle(String color, int Altura){
+		setColor(color);
+		setAltura(Altura);
+		setPrecio(Altura);
+	}
+	
+	public void setColor(String color){
+		this.color = color;
+	}
+	public String getColor(){
+		return this.color;
+	}
+	public void setAltura(int Altura){
+		this.Altura = Altura;
+	}
+	public int getAltura(){
+		return this.Altura;
+	}
+	protected void setPrecio(int Altura){
+		this.precio = 2 * Altura; 
+	}
+	public double getPrecio(){
+		return this.precio;
+	}
+}
+
+
+
+public class AromaedCandle extends Candle {
+	private String aroma;
+	
+	public AromaedCandle(String color, int altura, String aroma){
+		super(color, altura);
+		setAroma(aroma);
+		setPrecio(altura);
+	}
+	
+	public void setAroma(String aroma){
+		this.aroma = aroma;
+	}
+	public String getAroma(){
+		return this.aroma;
+	}
+	protected void setPrecio(int altura){
+		super.setPrecio(altura);
+		this.price = 3 * altura; 
+		}
+}
+
+
+
+import java.text.DecimalFormat;
+
+import javax.swing.JOptionPane;
+
+public class DemoVelas {
+
+	public static void main(String[] args) {
+
+		String color = userInput("Ingresa el color: ");
+		int altura = Integer.parseInt(userInput("Ingresa la altura: "));
+		Velas vela = new Velas(color, altura);
+		display(createString(vela));
+		
+		String color2 = userInput("Ingresa el color: ");
+		String aroma = userInput("Ingresa el aroma: ");
+		int altura2 = Integer.parseInt(userInput("Ingresa la altura: "));
+		Aroma_Vela sVela = new Aroma_Vela(color2, altura2, aroma);
+		display(createString(sVela));	
+		
+		
+	}
+	
+	private static String userInput(String prompt){
+		return JOptionPane.showInputDialog(null, prompt);
+	}
+	private static void display(String msg){
+		JOptionPane.showMessageDialog(null, msg);
+	}
+	private static String createString(Velas velas){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Color: ");
+		sb.append(velas.getColor());
+		sb.append("\nAltura: ");
+		sb.append(velas.getAltura());
+		sb.append("\nPrecio: ");
+		sb.append(decForm(velas.getPrecio()));
+		return sb.toString();
+	}
+	private static String decForm(double decimal) {
+		DecimalFormat formatter = new DecimalFormat("$#,##0.00");
+		return formatter.format(decimal);
+	}
+
+}

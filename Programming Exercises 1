@@ -1,0 +1,75 @@
+import javax.swing.JOptionPane;
+
+public class Horse{
+
+	private String nombre;
+	private String color;
+	private String fecha_nacimiento;
+	
+   public void setNombre()
+	{
+	   nombre = JOptionPane.showInputDialog(null,"Ingresa el nombre del caballo:");  
+	}
+   public void setColor()
+	{
+	   color = JOptionPane.showInputDialog(null,"Ingresa el color del caballo:");  
+	}
+   public void setFecha()
+	{
+	   fecha_nacimiento = JOptionPane.showInputDialog(null,"Ingresa la fecha de nacimiento del caballo:"); 
+	}
+   public String getNombre()
+   {
+	   return nombre;
+   }
+   public String getColor()
+   {
+	   return color;
+   }
+   public String getFecha()
+   {
+	   return fecha_nacimiento;
+   }
+   
+}
+
+
+
+import javax.swing.JOptionPane;
+public class RaceHorse extends Horse{
+	private String numero_carrera;
+	
+	public void setCarrera()
+	{
+		numero_carrera = JOptionPane.showInputDialog(null,"Ingrese el numero de carreras de caballos:");
+	}
+
+	public String getCarrera()
+	{
+		return numero_carrera;
+	}
+	
+}
+
+
+
+import javax.swing.JOptionPane;
+public class DemoHorses {
+	
+public static void main(String[] args)
+	{
+	
+Horse caballo = new Horse();
+RaceHorse racaballo = new RaceHorse();
+				
+	caballo.setName();
+	caballo.setColor();
+	caballo.setFecha();
+        racaballo.setCarrera();
+		
+	JOptionPane.scaballoowMessageDialog(null,"El nombre del caballo es " + caballo.getNombre() + 
+	". El color del caballo es " + caballo.getColor()+ ". Nacio en " + caballo.getFecha() + 
+	". " + caballo.getNombre() + " los caballos correran " + rcaballo.getCarrera() + " carreras");
+				
+	}
+}

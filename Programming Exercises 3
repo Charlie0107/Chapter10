@@ -1,0 +1,157 @@
+public class TennisGame
+{
+    protected String jugador1;
+    protected String jugador2;
+    private int puntuacion_jugador1;
+    private int puntuacion_jugador2;
+    private String puntos1;
+    private String puntos2;
+
+    public String getJugador1()
+    {
+        return jugador1;
+    }
+    public String getJugador2()
+    {
+        return jugador2;
+    }
+    public int getPuntuacion_jugador1()
+    {
+        return puntuacion_jugador1;
+    }
+    public int getPuntuacion_jugador2()
+    {
+        return puntuacion_jugador2;
+    }
+    public String getPuntos1()
+    {
+        return puntos1;
+    }
+    public String getPuntos2()
+    {
+        return puntos2;
+    }
+
+    public void setNombres(String nombre1, String nombre2)
+    {
+        jugador1 = nombre1;
+        jugador2 = nombre2;
+    }
+
+    public void setPuntuaciones(int puntuacion1, int puntuacion2)
+    {
+        if (puntuacion1 < 0 || puntuacion1 > 4 || puntuacion2 < 0 || puntuacion2 > 4 || (puntuacion1 == 4 && puntuacion2 == 4)) {
+            puntuacion1 = 0;
+            puntuacion2 = 0;
+            puntos1 = "error";
+            puntos2 = "error";
+        } else {
+            puntos1 = formato_puntos(puntuacion1);
+            puntos2 = formato_puntos(puntuacion2);
+        }
+        puntuacion_jugador1 = puntuacion1;
+        puntuacion_jugador2 = puntuacion2;
+    }
+
+
+    private String formato_puntos(int score)
+    {
+        String score = "";
+        switch (score) {
+            case 0:
+            score = "love";
+            break;
+            case 1:
+            score = "15";
+            break;
+            case 2:
+            score = "30";
+            break;
+            case 3:
+            score = "40";
+            break;
+            case 4:
+            score = "game";
+            break;
+        }
+        return score;
+    }
+
+    public void displayResults()
+    {
+        System.out.println(getJugador1() + " vs. " + getJugador2() + " - Final Score (" + getPuntuacion_jugador1() + " - " + getPuntuacion_jugador2() + "): " + getPuntos1() + " / " + getPuntos2());
+    }
+}
+
+
+
+
+
+public class DoublesTennisGame extends TennisGame
+{
+    private String compañero1;
+    private String compañero2;
+
+    public String getCompañero1()
+    {
+        return compañero1;
+    }
+    public String getCompañero2()
+    {
+        return compañero2;
+    }
+
+
+    public void setNombres(String nombre1, String compañero_nombre1, String nombre2, String compañero_nombre2)
+    {
+        jugador1 = nombre1;
+        jugador2 = nombre2;
+        compañero1 = compañero_nombre1;
+        compañero2 = compañero_nombre2;
+    }
+
+    public void displayResults()
+    {
+        System.out.println(getJugador1() + " and " + getCompañero1() + " vs. " + getJugador2() + " and " + getCompañero2() + " - Final Score (" + getPuntuacion_jugador1() + " - " + getPuntuacion_jugador2() + "): " + getPuntos1() + " / " + getPuntos2());
+    }
+}
+
+
+
+
+
+public class DemoTennisGames
+{
+    public static void main(String args[])
+    {
+        TennisGame game1 = new TennisGame();
+        game1.setNombres("Jonathan", "Yareth");
+        game1.setPuntuaciones(2, 1);
+        game1.displayResults();
+
+        TennisGame game2 = new TennisGame();
+        game2.setNombres("Oscar", "David");
+        game2.setPuntuaciones(5, 3);
+        game2.displayResults();
+
+        TennisGame game3 = new TennisGame();
+        game1.setNombres("Torres", "Ernesto");
+        game1.setPuntuaciones(0, 4);
+        game1.displayResults();
+
+        DoublesTennisGame doublesGame1 = new DoublesTennisGame();
+        doublesGame1.setNombres("Samantha", "Gregoria", "Nathanael", "Pedro");
+        doublesGame1.setPuntuaciones(0, 1);
+        doublesGame1.displayResults();
+
+        DoublesTennisGame doublesGame2 = new DoublesTennisGame();
+        doublesGame2.setNombres("Monserrat", "Lucio", "Madero", "Benito");
+        doublesGame2.setPuntuaciones(4, 3);
+        doublesGame2.displayResults();
+
+        DoublesTennisGame doublesGame3 = new DoublesTennisGame();
+        doublesGame3.setNombres("Lizbeth", "Jimmy", "Leno", "Christian");
+        doublesGame3.setPuntuaciones(-1, 2);
+        doublesGame3.displayResults();
+    }
+}

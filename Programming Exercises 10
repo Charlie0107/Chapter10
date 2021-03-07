@@ -1,0 +1,119 @@
+import java.util.Scanner;
+
+public class Person {
+    private String primer_nombre, apellido;
+    private int codigoZip, telefono;
+
+    Scanner cadena = new Scanner(System.in);
+    Scanner numero = new Scanner(System.in);
+
+    public void setData(){
+        primer_nombre = iString("Primer nombre: ");
+        apellido = iString("Apellido: ");
+        codigoZip = iInt("Codigo Zip: ");
+        telefono = iInt("Numero de telefono: ");
+    }
+
+    public void display(){
+        System.out.println(
+                "Nombre: " + apellido + ", " + primer_nombre +
+                "\nCodigo Zip: " + codigoZip +
+                "\nNumero de telefono: " + telefono
+        );
+    }
+
+    public String iString(String text){
+        System.out.print(text);
+        return cadena.nextLine();
+    }
+
+    public int iInt(String text){
+        System.out.print(text);
+        return numero.nextInt();
+    }
+
+    public double iDouble(String text){
+        System.out.print(text);
+        return numero.nextDouble();
+    }
+
+}
+
+
+
+public class CollegeEmployee extends Person{
+    private int numero_social;
+    private double salario_anual;
+    private String dptNombre;
+
+    @Override
+    public void setData(){
+        super.setData();
+        numero_social = iInt("Numero de seguridad: ");
+        salario_anual = iDouble("Salario anual: ");
+        dptNombre = iString("Nombre del departamento: ");
+    }
+
+    @Override
+    public void display(){
+        super.display();
+        System.out.println(
+                "Numero de seguridad: " + numero_social +
+                "\nSalario anual: " + salario_anual +
+                "\nDepartamento: " + dptNombre
+        );
+    }
+}
+
+
+
+
+
+
+public class Faculty extends CollegeEmployee{
+    private Boolean protegido;
+    private String opcion;
+
+    @Override
+    public void setData(){
+        super.setData();
+        System.out.println("Proteccion? [Y/N]: ");
+        if(opcion.equals("Y") || opcion.equals("y")){
+            protegido = true;
+        }else{
+            protegido = false;
+        }
+    }
+
+    @Override
+    public void display(){
+        super.display();
+        System.out.println(
+                "Proteccion: " + protegido
+        );
+    }
+}
+
+
+
+
+
+public class Student extends Person{
+    private String campo_principal;
+    private double promedio_calificaciones;
+
+    @Override
+    public void setData(){
+        campo_principal = iString("campo de estudio principal: ");
+        promedio_calificaciones = iDouble("Promedio: ");
+    }
+}
+
+
+
+public class CollegeList {
+    public void main(String[] args){
+
+    }
+
+}

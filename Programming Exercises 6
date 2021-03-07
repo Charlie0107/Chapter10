@@ -1,0 +1,195 @@
+import java.swing.JOptionPane;
+import java.text.DecimalFormat;
+
+public class Package
+{
+	private int peso;
+	private char envio;
+	private double costo_envio;
+	
+	private final char default = 'X';
+	
+	private final double[] COSTE_PORAIRE = {2.00, 3.00, 4.50};
+	private final double[] COSTE_CAMION = {1.50, 2.35, 3.25};
+	private final double[] COSTE_XAIL = {0.50, 1.50, 2.15};
+	
+	
+	public Package(int w, char x)
+	{
+		setPeso(w);
+		setEnvio(x); 
+		
+		calcular_costo();
+	}
+	
+	public void setPeso(int w)
+	{
+		peso = w;
+	}
+	public int getPeso()
+	{
+		return peso;
+	}
+	
+	public void setEnvio(char x)
+	{
+		char convertedChar;
+		String texpString;
+		
+		texpString = String.valueOf(x);
+		texpString = texpString.toUpperCase();
+		convertedChar = texpString.charAt(0);
+			
+		switch(convertedChar)
+		{
+			case 'A':
+			case 'T':
+			case 'X':
+				envio = convertedChar;
+				break;
+			default:
+				Systex.out.println("Valor erroneo: " + convertedChar);
+				Systex.out.println("Default para" + default);
+				envio = default;
+				break;
+		}
+	}
+	public char getEnvio()
+	{
+		return envio;
+	}
+	
+	public void calcular_costo()
+	{
+		switch(getEnvio())
+		{
+			case 'A':
+				if(getPeso() <= 8)
+					costo_envio = COSTE_PORAIRE[0];
+				else if (getPeso() >= 9 && getPeso() <= 16)
+					costo_envio = COSTE_PORAIRE[1];
+				else if (getPeso() >= 17)
+					costo_envio = COSTE_PORAIRE[2];
+				break;
+			case 'T':
+				if(getPeso() <= 8)
+					costo_envio = COSTE_CAMION[0];
+				else if (getPeso() >= 9 && getPeso() <= 16)
+					costo_envio = COSTE_CAMION[1];
+				else if (getPeso() >= 17)
+					costo_envio = COSTE_CAMION[2];
+				break;
+			case 'X':
+				if(getPeso() <= 8)
+					costo_envio = COSTE_XAIL[0];
+				else if (getPeso() >= 9 && getPeso() <= 16)
+					costo_envio = COSTE_XAIL[1];
+				else if (getPeso() >= 17)
+					costo_envio = COSTE_XAIL[2];
+				break;
+		}
+	}
+	public double getCosto_envio()
+	{
+		return costo_envio;
+	}
+	
+	public void display()
+	{
+		DecimalFormat f = new DecimalFormat("##.00");
+		String olvidoCosto_envio = f.formato(getCosto_envio());
+		String displayString = "";
+		displayString += "Peso: " + getPeso();
+		displayString += "\nEnvio: " + getEnvio();
+		displayString += "\nCosto de envio: $" + olvidoCosto_envio;
+		
+		JOptionPane.showMessageDialog(null, displayString);
+	}
+}
+
+
+
+
+
+
+
+
+
+import java.swing.JOptionPane;
+import java.text.DecimalFormat;
+
+public class InsuredPackage extends Package
+{
+	private final double[] SEGURO = {2.45, 3.95, 5.55};
+	
+	private double costos_antes;
+	private double costo_envio;
+	private double costo_seguro;
+	
+	public InsuredPackage(int w, char x)
+	{
+		super(w, x);
+		
+		this.calcular_costo();
+	}
+	
+	public void calcular_costo()
+	{
+		costos_antes = super.getCosto_envio();
+		if(costos_antes <= 1.00)
+			costo_seguro = SEGURO[0];
+		else if(costos_antes >= 1.01 && costos_antes <= 3.00)
+			costo_seguro = SEGURO[1];
+		else if(costos_antes >= 3.01)
+			costo_seguro = SEGURO[2];
+		
+		costo_envio = costos_antes + costo_seguro;
+	}
+	
+	public void display()
+	{
+
+		DecimalFormat f = new DecimalFormat("##.00");
+		String olvidoCosto_envio = f.formato(costo_envio);
+		String formatotedInsuranceCost = f.formato(costo_seguro);
+		
+		String displayString = "";
+		displayString += "Peso: " + super.getPeso();
+		displayString += "\nEnvio: " + super.getEnvio();
+		displayString += "\nSeguro: $" + costo_seguro;
+		displayString += "\nCosto con seguro: $" + olvidoCosto_envio;
+		
+		JOptionPane.showMessageDialog(null, displayString);
+	}
+}
+
+
+
+
+
+
+public class UsePackage
+{
+	public static void main(String[] args)
+	{
+		Package[] packageArray = new Package[3];
+		packageArray[0] = new Package(3, 'A');
+		packageArray[1] = new Package(10, 'T');
+		packageArray[2] = new Package(15, 'X');
+		
+		InsuredPackage[] insuredPackageArray = new InsuredPackage[3];
+		insuredPackageArray[0] = new InsuredPackage(14, 'X');
+		insuredPackageArray[1] = new InsuredPackage(4, 'T');
+		insuredPackageArray[2] = new InsuredPackage(20, 'A');
+		
+		System.out.println("Displaying Packages");
+		for(Package p : packageArray)
+			p.display();
+		
+		System.out.println("\nDesplegar paquetes");
+		for(InsuredPackage ip : insuredPackageArray)
+			ip.display();
+	}
+}
+
+

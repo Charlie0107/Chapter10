@@ -1,0 +1,27 @@
+public class LessonWithRental {
+	
+	private final String ID;
+	private final long identificacion_ID;
+	private float cargo;
+
+	public Rental(String imdbID, long identificacion_ID){
+		this.imdbID = imdbID;
+		this.identificacion_ID = customerID;
+	}
+	
+	public void charge(){
+		Customer customer = CustomerDAO.fetch(identificacion_ID);
+		amountCharged = new Pricer().calcularPrecio(imdbID);
+		customer.cargo(cargo);
+		save();
+	}
+
+	private void seguro() {
+		RentalDAO.seguro(this);
+	}
+
+	public double getCargo() {
+		return cargo;
+	}
+
+}

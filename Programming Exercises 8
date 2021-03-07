@@ -1,0 +1,143 @@
+public class Curso_colegio
+{
+	private String departamento;
+	private int numero_curso;
+	private int creditos;
+	private double tarifa;
+	
+	private final double COSTO_POR_CREDITOHORA = 120.00;
+
+	public Curso_colegio(String d, int cn, int cr)
+	{
+		departamento = d.toUpperCase();
+		numero_curso = cn;
+		creditos = cr;
+		
+		calcularTarifa();
+	}
+	
+	public String getDepartamento()
+	{
+		return departamento;
+	}
+	
+	public int getNumero_curso()
+	{
+		return numero_curso;
+	}
+	
+	public int getCreditos()
+	{
+		return creditos;
+	}
+	
+	public double getTarifa()
+	{
+		return tarifa;
+	}
+	
+	private void calcularTarifa()
+	{
+		tarifa = COSTO_POR_CREDITOHORA * creditos;
+	}
+	
+	public void display()
+	{
+		System.out.println("Departamento: " + departamento);
+		System.out.println("Numero del curso: " + numero_curso);
+		System.out.println("Creditos y horas: " + creditos);
+		System.out.println("Tarifa del curso: " + tarifa);
+	}
+}
+
+
+
+
+
+
+public class LabCourse extends Curso_colegio
+{
+	private final double LAB_TARIFA = 50.00;
+	
+	private double lab_cursoTarifa;
+	
+	public LabCourse(String d, int cn, int cr)
+	{
+		super(d, cn, cr);
+		
+		this.calcularTarifa();
+	}
+	
+	private void calcularTarifa()
+	{
+		lab_cursoTarifa = super.getTarifa() + LAB_TARIFA;
+	}
+	
+	public void display()
+	{
+		System.out.println("Departamento: " + getDepartamento());
+		System.out.println("Numero del curso: " + getNumero_curso());
+		System.out.println("Creditos y horas: " + getCreditos());
+		System.out.println("Tarifa del curso: " + lab_cursoTarifa);
+		System.out.println("Lab tarifa $" + LAB_TARIFA + " applied");
+	}
+}
+
+
+
+
+import java.util.Scanner;
+
+public class UseCourse
+{
+	private enum cursoss {BIO, CHM, CIS, PHY};
+	
+	private static boolean labCursos(String d)
+	{
+		for(cursoss c : cursoss.values())
+		{
+			if(c.name().equals(d))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static void main(String[] args)
+	{
+		Scanner input = new Scanner(System.in);
+		
+		String usuario;
+		String departamento;
+		int numero_curso;
+		int horas_creditos;
+		
+		System.out.print("Ingresa el Departamento: ");
+		usuario = input.nextLine();
+		departamento = usuario.toUpperCase().substring(0, 3);
+		
+		System.out.print("Ingresa el Numero del cursober: ");
+		usuario = input.nextLine();
+		numero_curso = Integer.parseInt(usuario);
+		
+		System.out.print("Ingresa el numero de creditos y horas: ");
+		usuario = input.nextLine();
+		horas_creditos = Integer.parseInt(usuario);
+		
+		if(labCursos(departamento))
+		{
+			LabCourse userCourse = new LabCourse(departamento, numero_curso, horas_creditos);
+			userCourse.display();
+		}
+		else
+		{
+			Curso_colegio userCourse = new Curso_colegio(departamento, numero_curso, horas_creditos);
+			userCourse.display();
+		}
+		
+		input.close();
+	}
+}
+
+
+

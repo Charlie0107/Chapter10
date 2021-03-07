@@ -1,0 +1,117 @@
+public class CarRental {
+	private String nombre_inquilino;
+	private int codigoZip;
+	private String sizeCarroRentado;
+	private double tarifa_diaria;
+	private double duracion_alquiler;
+	private double precio_renta;
+	
+	public CarRental(String nombre_inquilino, int codigoZip, String sizeCarroRentado, double duracion_alquiler) {
+		this.nombre_inquilino = nombre_inquilino;
+		this.codigoZip = codigoZip;
+
+		this.sizeCarroRentado = sizeCarroRentado;
+		this.duracion_alquiler = duracion_alquiler;
+
+		this.duracion_alquiler = duracion_alquiler;
+
+
+		switch(sizeCarroRentado){
+			case "economia": 
+				tarifa_diaria = 29.99;
+				break;
+			case "tamaño_medio": 
+				tarifa_diaria = 38.99;
+				break;
+			case "tamaño_completo":
+				tarifa_diaria = 43.50;
+				break;
+
+		}
+		precio_renta = duracion_alquiler * tarifa_diaria;
+	}
+
+	public void display(double implemento){
+		System.out.print(
+				"\nNombre del inquilino: " + nombre_inquilino +
+				"\nCodigozip: " + codigoZip +
+				"\nTipo de renta: " + duracion_alquiler +
+				"\nTarifa de alquiler diaria: " + tarifa_diaria +
+				"\nTarifa de alquiler total: " + (precio_renta + implemento));
+
+
+	}
+
+	public void display() {
+		display(0);
+		System.out.println("codigoZip = " + codigoZip);
+		System.out.println("tarifa_diaria = " + tarifa_diaria);
+		System.out.println("");
+
+	}
+
+	
+}
+
+
+
+
+
+public class LuxuryCarRental extends CarRental{
+	
+	public LuxuryCarRental(String nombre_inquilino, int codigoZip, String sizeCarroRentado, double duracion_alquiler) {
+		super(nombre_inquilino, codigoZip, sizeCarroRentado, duracion_alquiler);
+	}
+
+	@Override
+	public void display(){
+		super.display(79.95);
+	}
+	
+	@Override
+	public void display(double implemento){
+		super.display(79.95+implemento);
+	}
+}
+
+
+
+
+import java.util.Scanner;
+
+public class UseCarRental {
+
+  public static void main(String[] args) {
+
+	  Scanner cadena = new Scanner(System.in);
+	  Scanner numero = new Scanner(System.in);
+	  
+	  String option, nombre_inquilino, sizeCar, typeCar;
+	  int codigoZip, dias_rentas;
+	  
+	  System.out.print("Nombre del inquilino: ");
+	  nombre_inquilino = cadena.nextLine();
+	  System.out.print("Codigo Zip: ");
+	  codigoZip = numero.nextInt();
+	  System.out.print("Elige el tipo de carro: [standard, luxury]: ");
+	  typeCar = cadena.nextLine();
+	  System.out.print("Tipo de carro [economia, tamaño_medio, tamaño_completo]: ");
+	  sizeCar = cadena.nextLine();
+	  System.out.print("¿Cuantos dias quiere rentar?: ");
+	  dias_rentas = numero.nextInt();
+	  
+	  if("standard".equals(typeCar)){
+		  CarRental standardCar = new CarRental(nombre_inquilino, codigoZip, sizeCar, dias_rentas);
+		  standardCar.display();
+	  }else if ("luxury".equals(typeCar)) {
+		  LuxuryCarRental luxuryCar = new LuxuryCarRental(nombre_inquilino, codigoZip, sizeCar, dias_rentas);
+
+		  System.out.print("¿Te gustaria tener chofer? [Y/N]: ");
+		  option = cadena.nextLine();
+
+		  if ("Y".equals(option) || "y".equals(option)) {
+			  luxuryCar.display(200);
+		  } else luxuryCar.display();
+	  }
+  }
+}

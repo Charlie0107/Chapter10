@@ -1,0 +1,138 @@
+public class Die {
+
+	protected int valor = 0; 
+	private int valor_alto = 6; 
+	private int valor_bajo = 1; 
+	
+	public Die(){
+		this(1,6);
+		this.setValor(this.genRandomValor());
+	}
+	
+	public Die(int valor){
+		this(1,6,valor);
+		
+	}
+	
+	public Die(int lowValor, int highValor){
+		if(lowValor < highValor){
+			this.valor_bajo = lowValor;
+			this.valor_alto = highValor;
+			this.setValor(this.genRandomValor());
+		}
+		else{
+			throw new IllegalArgumentException("lowValor debe ser menor que highValor");
+			
+		}
+
+	}
+	
+	public Die(int lowValor, int highValor, int valor){
+		this(lowValor,highValor);
+		this.setValor(valor);+
+	}
+	
+	public void setValor(int valor){
+		if(valor >= this.valor_bajo && valor <= this.valor_alto){
+			this.valor = valor;
+		}
+		else{
+			throw new IndexOutOfBoundsException("valor debe estar entre "+this.valor_bajo+" and "+this.valor_alto);
+			
+		}
+	}
+	
+	public int getValor(){
+		return this.valor;
+	}
+	
+	public int getLados(){
+		return this.valor_alto-this.valor_bajo;
+	}
+	
+	public int getMayor(){
+		return this.valor_alto;
+	}
+	
+	public int getMenor(){
+		return this.valor_bajo;
+	}
+	
+	public void limites(int lowValor, int highValor){
+		if(lowValor < highValor){
+			this.valor_bajo = lowValor;
+			this.valor_alto = highValor;
+		}
+		else{
+			throw new IllegalArgumentException("lowValor must be lower than highValor");
+			
+		}
+	}
+	
+	public void reRoll(){
+		this.setValor(this.genRandomValor());
+		
+	}
+	
+	protected int genRandomValor(){
+		
+		return (int) ((Math.random() * (this.valor_alto - this.valor_bajo + 1))+this.valor_bajo);
+	}
+	
+	
+
+}
+
+
+
+
+public class LoadedDie extends Die {
+	public LoadedDie(){
+		while(this.valor == 1){
+			this.reRoll();												 
+		}
+	}
+	
+	public void reRoll(){
+		do{
+			super.reRoll();
+		}while(this.valor == 1);
+	}
+
+}
+
+
+
+
+
+public class TestLoadedDie {
+
+	public static void main(String[] args) {
+		
+		Die die1 = new Die();
+		Die die2 = new Die();
+		LoadedDie cheaterDie = new LoadedDie();
+		int counter = 0;
+		System.out.println("Rolling dice...");
+		for(int i = 1; i<=1000; ++i){
+			die1.reRoll();
+			die2.reRoll();
+			if(die1.getValor()>die2.getValor()){
+				counter++;
+			}
+		}
+		System.out.println("El primer dado fue mas alto que el segundo "+counter+" times out of 1000.");
+		counter = 0;
+		System.out.println("Tira de nuevo...");
+		for(int i = 1; i<=1000; ++i){
+			die1.reRoll();
+			cheaterDie.reRoll();
+			if(die1.getValor()>cheaterDie.getValor()){
+				counter++;
+			}
+		}
+		System.out.println("El dado legítimo era más alto que el cargado "+counter+" times out of 1000.");
+
+	}
+
+}

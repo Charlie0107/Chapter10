@@ -1,0 +1,63 @@
+public class CabinRental {
+	
+	private int numero_cabina;
+	protected double tarifa_semanal;
+	
+	
+	public CabinRental(int numero_cabina) {
+		super();
+		this.numero_cabina = numero_cabina;
+		System.out.println("Constructor de alquiler de cabañas");
+		calcular_tarifa();
+	}
+	
+	public void calcular_tarifa(){
+		if(numero_cabina > 0 && numero_cabina <= 3) {
+			tarifa_semanal = 950;
+		} else {
+			tarifa_semanal = 1100;
+		}
+		System.out.println("Tarifa semanal calculado");
+	}
+	
+	public int getNumero_cabina() {
+		return numero_cabina;
+	}
+	
+	public double getTarifa_semanal() {
+		return tarifa_semanal;
+	}
+	
+}
+
+
+public class HolidayCabinRental extends CabinRental {
+	
+	private final int recargo = 150;
+
+	public HolidayCabinRental(int numero_cabina) {
+		super(numero_cabina);
+		System.out.println("HolidayCabinRental constructor");
+		añadir_recargos();
+	}
+	
+	public void añadir_recargos(){
+		tarifa_semanal = tarifa_semanal + recargo;
+		System.out.println("Recargos añadidos a tarifas semanales");
+	}
+	
+}
+
+
+public class DemoCabinRental {
+
+	public static void main(String[] args) {
+		
+		HolidayCabinRental hcr = new HolidayCabinRental(2);
+		System.out.printf("La tarifa de alquiler semanal para la cabaña de vacaciones de verano es : %.2f\n", hcr.getTarifa_semanal());
+		hcr = new HolidayCabinRental(4);
+		System.out.printf("La tarifa de alquiler semanal para la cabaña de vacaciones de verano es : %.2f", hcr.getTarifa_semanal());
+		
+	}
+
+}
